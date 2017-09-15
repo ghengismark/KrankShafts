@@ -19,9 +19,12 @@ package krankshafts;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.AudioClip;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
@@ -30,26 +33,37 @@ import javafx.stage.Stage;
  */
 public class Krankshafts extends Application {
     
+    // Some initial dimentions
+    public double   screenXSize        = 1000;
+    public double   screenYSize        = 800;  
+    public double   boardXSize         = 600;
+    public double   boardYSize         = 600;  
+    public int      boardXSlots        = 12;
+    public int      boardYSlots        = 12;  
+    
+    protected       Stage               mainStage;    
+    protected       Scene               scene;    
+    protected       Group               root;
+    protected       Board       mainBoard;
+    
     @Override
     public void start(Stage primaryStage) {
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
+        mainStage = primaryStage;
+        mainStage.setTitle("Asteroids FX");
         
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
+        root = new Group();
+        scene = new Scene(root, screenXSize, screenYSize, Color.BLACK);
+        mainStage.setScene(scene);
         
-        Scene scene = new Scene(root, 300, 250);
+        mainBoard = new Board(screenXSize-boardXSize-1, screenYSize-boardYSize-1, boardXSize, boardYSize, boardXSlots, boardYSlots);
+        root.getChildren().add(mainBoard);
         
-        primaryStage.setTitle("Hello World!");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+//        backgroundMusic = new AudioClip(getClass().getClassLoader().getResource(BACKGROUND_MUSIC_FILE).toString());
+//        backgroundMusic.play();
+        
+    //    statusUpdate();
+        
+        mainStage.show();
     }
 
     /**

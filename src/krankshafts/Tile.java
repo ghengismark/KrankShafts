@@ -25,17 +25,32 @@ import javafx.scene.Group;
 abstract class Tile extends Group {
     
     protected   Direction   direction;
-    protected   int         xLoc, yLox;
-    protected   int         xSize, ySize;
+    protected   double         xLoc, yLoc;
+    protected   double         xSize, ySize;
     
-    public Tile(int sXLoc, int sYLoc, int sXSize, int sYSize, Direction sDirection) {
+    public Tile(double sXLoc, double sYLoc, double sXSize, double sYSize, Direction sDirection) {
         direction = sDirection;
         xLoc = sXLoc;
-        yLox = sYLoc;
+        yLoc = sYLoc;
         xSize = sXSize;
         ySize = sYSize;
     }
     
     abstract void draw();
+    
+    public void rotate90() {
+        direction = direction.rotate90();
+        this.setRotate(direction.getDegree());
+    }
+    
+    public void rotate180() {
+        direction = direction.rotate180();
+        this.setRotate(direction.getDegree());
+    }
+        
+    public void rotate270() {
+        direction = direction.rotate270();
+        this.setRotate(direction.getDegree());
+    }
     
 }

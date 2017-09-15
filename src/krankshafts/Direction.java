@@ -19,7 +19,7 @@ package krankshafts;
 
 /**
  *
- * @author unknown
+ * @author markknapp
  */
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -27,10 +27,10 @@ public enum Direction {
 
     // use magic numbers to set the ordinal (used for rotation),
     // and the dx and dy of each direction.
-    NORTH(0, 0, 1),
-    EAST(1, 1, 0),
-    SOUTH(2, 0, -1),
-    WEST(3, -1, 0);
+    NORTH(0, 0, 1, 0),
+    EAST(1, 1, 0, 90),
+    SOUTH(2, 0, -1, 180),
+    WEST(3, -1, 0, 270);
 
     private static final ThreadLocalRandom rnd = ThreadLocalRandom.current();
 
@@ -41,10 +41,12 @@ public enum Direction {
     private final int r90index, r180index, r270index;
     private final boolean horizontal, vertical;
     private final int dx, dy;
+    private final double degree;
 
-    private Direction(int ordinal, int dx, int dy) {
+    private Direction(int ordinal, int dx, int dy, int degree) {
         this.dx = dx;
         this.dy = dy;
+        this.degree = degree;
         this.horizontal = dx != 0;
         this.vertical = !horizontal;
         this.r90index  = (ordinal + 1) % 4; 
@@ -92,5 +94,13 @@ public enum Direction {
         return vertical;
     }
 
+    /**
+     * Return the degree of the current facing.
+     * @return degrees, where 0 is north, 90 is east, etc.
+     */
+    public double getDegree() {
+        return degree;
+    }
+    
     
 }

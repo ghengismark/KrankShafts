@@ -16,19 +16,30 @@
  */
 package krankshafts;
 
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
+
 /**
  *
  * @author markknapp
  */
 public class PlainTile extends Tile {
-    public PlainTile(int sXLoc, int sYLoc, int sXSize, int sYSize, Direction sDirection) {
+    
+    protected Shape background;
+    
+    
+    public PlainTile(double sXLoc, double sYLoc, double sXSize, double sYSize, Direction sDirection) {
         super(sXLoc, sYLoc, sXSize, sYSize, sDirection);
         draw();
     }
 
     @Override
     protected void draw() {
-        
+        background = new Rectangle(xLoc, yLoc, xSize, ySize);
+        background.setFill(Color.BLUE);
+        background.setStroke(Color.WHITE);
+        this.getChildren().add(background);
     }
 
 }

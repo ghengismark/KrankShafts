@@ -16,35 +16,75 @@
  */
 package krankshafts;
 
+import java.util.Random;
 import javafx.scene.Group;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
+import javafx.scene.paint.Color;
 
 /**
  *
  * @author markknapp
  */
 public class Board extends Group {
-
-    private static final int X_TILE_SIZE = 100;
-    private static final int Y_TILE_SIZE = 100;
     
-    protected   int         xLoc, yLox;
+    protected   double      xLoc, yLoc;
     protected   int         xSlots, ySlots;
-    protected   Tile[][]    tiles;
-    
+    protected   double      xSize, ySize;
+    protected   double      xTileSize, yTileSize;
+    protected   Shape       background;
+    protected   Tile[][]    tileArr;
+    protected   Group       tileGroup = new Group();    
+    protected       Random              diceRoller              = new Random();
             
-    public Board (int sXSlots, int sYSlots, int sXLoc, int sYLoc) {
+    public Board (double sXLoc, double sYLoc, double sXSize, double sYSize, int sXSlots, int sYSlots) {
         xLoc = sXLoc;
-        yLox = sYLoc;
+        yLoc = sYLoc;
         xSlots = sXSlots;
         ySlots = sYSlots;
-        tiles = new Tile[xSlots][ySlots];
+        xSize = sXSize;
+        ySize = sYSize;
+        xTileSize = xSize / xSlots;
+        yTileSize = ySize / ySlots;
+        tileArr = new Tile[xSlots][ySlots];
+        draw();
         populate();
     }
     
+    protected void draw() {
+        background = new Rectangle(xLoc, yLoc, xSize, ySize);
+        background.setFill(Color.GREY);
+        background.setStroke(Color.WHITE);
+        this.getChildren().add(background);
+        this.getChildren().add(tileGroup);
+    }
+    
     public void populate() {
-        for (int x = 0; x < tiles.length; x++)
-            for (int y = 0; y < tiles[x].length; y++)
-                tiles[x][y] = new PlainTile(xLoc + x * X_TILE_SIZE, xLoc + x * Y_TILE_SIZE, X_TILE_SIZE, Y_TILE_SIZE, Direction.randomDirection());
+        Tile temp;
+        for (int x = 0; x < tileArr.length; x++)
+            for (int y = 0; y < tileArr[x].length; y++) {
+                if (getTile(x,y) != null)
+                    killTile(x,y);
+                if (diceRoller.nextBoolean())
+                    temp = new PlainTile(xLoc + x * xTileSize, yLoc + y * yTileSize, xTileSize, yTileSize, Direction.randomDirection());
+                else
+                    temp = new SlowConveyorTile(xLoc + x * xTileSize, yLoc + y * yTileSize, xTileSize, yTileSize, Direction.randomDirection());
+                setTile(temp, x, y);
+            }
         
+    }
+    
+    public void setTile (Tile newTile, int xIndex, int yIndex) {
+        tileArr[xIndex][yIndex] = newTile;
+        tileGroup.getChildren().add(newTile);
+    }
+    
+    public Tile getTile (int xIndex, int yIndex) {
+        return tileArr[xIndex][yIndex];
+    }
+    
+    public void killTile (int xIndex, int yIndex) {
+        tileGroup.getChildren().remove(tileArr[xIndex][yIndex]);
+        tileArr[xIndex][yIndex] = null;
     }
 }
