@@ -127,9 +127,76 @@ public class Board extends DimentionalGroup {
      * @return the robot
      */  
     public Robot addRobot (int xIndex, int yIndex, Direction direction) {
-        Robot temp = new Robot(tileArr[xIndex][yIndex].getXCenterLoc(), tileArr[xIndex][yIndex].getYCenterLoc(), xRobotSize, yRobotSize, direction);
+        Robot temp = new Robot(tileArr[xIndex][yIndex].getXCenterLoc(), tileArr[xIndex][yIndex].getYCenterLoc(), xRobotSize, yRobotSize, xIndex, yIndex, direction);
         robotGroup.getChildren().add(temp);
         robotArr.add(temp);
         return temp;
     }
+    
+    /**
+     * Moves a specific robot a number of spaces forward or back.
+     * @param robot the robot to move
+     * @param move slots/tiles (NOT PIXELS) to move. Can be negative for backwards.
+     */  
+    public void moveRobot (Robot robot, int move) {
+        int potentialXSlot = robot.getXSlot();
+        int potentialYSlot = robot.getYSlot();
+        int directionModifer = 1;
+        
+        if (move < 0) {
+            directionModifer = -1;
+            move = -move;
+        }  
+        
+        for (int x = 0; x < move; x++) {
+            potentialXSlot += directionModifer * robot.direction.getDx();
+            potentialYSlot += directionModifer * robot.direction.getDy();
+            
+            // Can't move off the board
+            if ((potentialXSlot < 0) || (potentialYSlot < 0) || (potentialXSlot >= xTileSize) || (potentialYSlot >= yTileSize))
+                break;
+                    
+            // Can't move through a wall
+            // TODO - check for walls between current slot and potential slot
+                    
+            // Looks good. Go ahead and move.
+            robot.moveTo(tileArr[potentialXSlot][potentialYSlot].getXCenterLoc(), tileArr[potentialXSlot][potentialYSlot].getYCenterLoc(), potentialXSlot, potentialYSlot);
+        }
+    }
+    
+    /**
+     * Rotates a robot on the board.
+     * @param robot the robot to move
+     * @param rotate 0 = nothing, 1 = 90 CW, 2 = 180 CW, 3 = 270 CW. Negative is CCW
+     */  
+    public void rotateRobot (Robot robot, int rotate) {
+        rotate %= 4;
+        switch (rotate) {
+            case 1:
+            case -3:
+                robot.rotate90();
+                break;
+            case 2:
+            case -2:
+                robot.rotate180();
+                break;
+            case 3:
+            case -1:
+                robot.rotate270();
+        }
+    }
+
+    /**
+     * Gives robot instructions.
+     * @param robot the robot to move
+     * @param instruction in format "XYYY". X = m (move) or r (rotate). YYY is a positive or negative int.
+     */  
+    public void instructRobot (Robot robot, Instruction instruction) {
+                
+        if (instruction.getMove() != 0)
+            moveRobot(robot, instruction.getMove());
+        
+        if (instruction.getRotate() != 0)
+            rotateRobot(robot, instruction.getRotate());
+    }       
 }

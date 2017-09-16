@@ -58,10 +58,13 @@ public class Krankshafts extends Application {
         mainBoard = new Board(screenXSize-boardXSize-1, screenYSize-boardYSize-1, boardXSize, boardYSize, boardXSlots, boardYSlots);
         root.getChildren().add(mainBoard);
         
-        Robot playerOne = mainBoard.addRobot(4, 4, Direction.NORTH);
-        Robot playerTwo = mainBoard.addRobot(5, 5, Direction.EAST);
-        Robot playerThree = mainBoard.addRobot(6, 6, Direction.SOUTH);
-        Robot playerFour = mainBoard.addRobot(7, 7, Direction.WEST);
+        Robot playerOne = mainBoard.addRobot(0, 0, Direction.SOUTH);
+        mainBoard.instructRobot(playerOne, Instruction.FORWARD3);
+        mainBoard.instructRobot(playerOne, Instruction.LEFT);
+        mainBoard.instructRobot(playerOne, Instruction.FORWARD3);
+        mainBoard.instructRobot(playerOne, Instruction.UTURN);
+        
+
         
 //        backgroundMusic = new AudioClip(getClass().getClassLoader().getResource(BACKGROUND_MUSIC_FILE).toString());
 //        backgroundMusic.play();
@@ -69,6 +72,7 @@ public class Krankshafts extends Application {
     //    statusUpdate();
         
         mainStage.show();
+        
     }
 
     /**

@@ -16,11 +16,15 @@ import javafx.scene.shape.Rectangle;
  */
 public class Robot extends DimentionalGroup {
     
-    public   Direction   direction;
+    protected Direction direction;
+    protected int xSlot;
+    protected int ySlot;
     
-    public Robot(double xCenterLoc, double yCenterLoc, double xSize, double ySize, Direction direction) {
+    public Robot(double xCenterLoc, double yCenterLoc, double xSize, double ySize, int xSlot, int ySlot, Direction direction) {
         super(xSize, ySize);
         this.direction = direction;
+        this.xSlot = xSlot;
+        this.ySlot = ySlot;
         setCenter(xCenterLoc, yCenterLoc);
         draw();
     }
@@ -41,7 +45,7 @@ public class Robot extends DimentionalGroup {
         poly.setStroke(Color.WHITE);
         this.getChildren().add(poly);
         
-        this.setRotate(direction.getDegree());
+        this.setRotate(getDirection().getDegree());
         
     }
     
@@ -49,20 +53,56 @@ public class Robot extends DimentionalGroup {
      * Rotate 90 degrees clockwise.
      */
     public void rotate90() {
-        direction = direction.rotate90(this);
+        direction = getDirection().rotate90(this);
     }
     
     /**
      * Rotate 180 degrees clockwise.
      */
     public void rotate180() {
-        direction = direction.rotate180(this);
+        direction = getDirection().rotate180(this);
     }
     
     /**
      * Rotate 270 degrees clockwise (90 deg CCW).
      */
     public void rotate270() {
-        direction = direction.rotate270(this);
+        direction = getDirection().rotate270(this);
+    }
+    
+    /**
+     * Move the robot to a new X,Y (Center)
+     * @param   xCenterLoc    The X coordinate of the desired location
+     * @param   yCenterLoc    The Y coordinate of the desired location
+     * @param   xSlot    The X slot of the desired location
+     * @param   ySlot    The Y slot of the desired location
+     */  
+    public void moveTo (double xCenterLoc, double yCenterLoc, int xSlot, int ySlot) { 
+        this.setTranslateX(xCenterLoc - getXCenterLoc() + this.getTranslateX());
+        this.setTranslateY(yCenterLoc - getYCenterLoc() + this.getTranslateY());
+        setCenter(xCenterLoc, yCenterLoc);
+        this.xSlot = xSlot;
+        this.ySlot = ySlot;
+    }
+
+    /**
+     * @return the direction
+     */
+    public Direction getDirection() {
+        return direction;
+    }
+
+    /**
+     * @return the xSlot
+     */
+    public int getXSlot() {
+        return xSlot;
+    }
+
+    /**
+     * @return the ySlot
+     */
+    public int getYSlot() {
+        return ySlot;
     }
 }

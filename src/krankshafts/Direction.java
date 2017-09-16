@@ -28,9 +28,9 @@ public enum Direction {
 
     // use magic numbers to set the ordinal (used for rotation),
     // and the dx and dy of each direction.
-    NORTH(0, 0, 1, 0),
+    NORTH(0, 0, -1, 0),
     EAST(1, 1, 0, 90),
-    SOUTH(2, 0, -1, 180),
+    SOUTH(2, 0, 1, 180),
     WEST(3, -1, 0, 270);
 
     private static final ThreadLocalRandom rnd = ThreadLocalRandom.current();
@@ -133,5 +133,17 @@ public enum Direction {
         return degree;
     }
     
-    
+    /**
+     * @return the dx
+     */
+    public int getDx() {
+        return dx;
+    }
+
+    /**
+     * @return the dy
+     */
+    public int getDy() {
+        return dy;
+    }
 }
