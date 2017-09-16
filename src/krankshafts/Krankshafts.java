@@ -58,6 +58,11 @@ public class Krankshafts extends Application {
         mainBoard = new Board(screenXSize-boardXSize-1, screenYSize-boardYSize-1, boardXSize, boardYSize, boardXSlots, boardYSlots);
         root.getChildren().add(mainBoard);
         
+        Robot playerOne = mainBoard.addRobot(4, 4, Direction.NORTH);
+        Robot playerTwo = mainBoard.addRobot(5, 5, Direction.EAST);
+        Robot playerThree = mainBoard.addRobot(6, 6, Direction.SOUTH);
+        Robot playerFour = mainBoard.addRobot(7, 7, Direction.WEST);
+        
 //        backgroundMusic = new AudioClip(getClass().getClassLoader().getResource(BACKGROUND_MUSIC_FILE).toString());
 //        backgroundMusic.play();
         

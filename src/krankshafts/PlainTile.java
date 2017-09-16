@@ -29,14 +29,17 @@ public class PlainTile extends Tile {
     protected Shape background;
     
     
-    public PlainTile(double sXLoc, double sYLoc, double sXSize, double sYSize, Direction sDirection) {
-        super(sXLoc, sYLoc, sXSize, sYSize, sDirection);
+    public PlainTile(double xTopLeftLoc, double yTopLeftLoc, double xSize, double ySize, Direction direction) {
+        super(xTopLeftLoc, yTopLeftLoc, xSize, ySize, direction);
         draw();
     }
 
+    /**
+     * Graphically construct the object.
+     */
     @Override
     protected void draw() {
-        background = new Rectangle(xLoc, yLoc, xSize, ySize);
+        background = new Rectangle(getXTopLeftLoc(), getYTopLeftLoc(), getXSize(), getYSize());
         background.setFill(Color.BLUE);
         background.setStroke(Color.WHITE);
         this.getChildren().add(background);

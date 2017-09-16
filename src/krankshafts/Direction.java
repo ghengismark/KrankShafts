@@ -22,6 +22,7 @@ package krankshafts;
  * @author markknapp
  */
 import java.util.concurrent.ThreadLocalRandom;
+import javafx.scene.Node;
 
 public enum Direction {
 
@@ -78,6 +79,36 @@ public enum Direction {
         return values()[r270index];
     }
 
+    /**
+     * Finds what the enum would be turned 90 deg clockwise AND rotates a node.
+     * @param node a node to rotate
+     * @return A Direction that is 90 deg clockwise.
+     */  
+    public Direction rotate90(Node node) {
+        node.setRotate(values()[r90index].getDegree());
+        return values()[r90index];
+    }
+
+    /**
+     * Finds what the enum would be turned 180 deg clockwise AND rotates a node.
+     * @param node a node to rotate
+     * @return A Direction that is 180 deg clockwise.
+     */
+    public Direction rotate180(Node node) {
+        node.setRotate(values()[r180index].getDegree());
+        return values()[r180index];
+    }
+
+    /**
+     * Finds what the enum would be turned 270 deg clockwise (90 deg CCW) AND rotates a node.
+     * @param node a node to rotate
+     * @return A Direction that is 270 deg clockwise. (90 deg CCW)
+     */
+    public Direction rotate270(Node node) {
+        node.setRotate(values()[r270index].getDegree());
+        return values()[r270index];
+    }
+    
     /**
      * Get if the Direction is horizontal
      * @return True if EAST or WEST. False if NORTH or SOUTH

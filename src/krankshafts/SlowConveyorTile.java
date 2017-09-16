@@ -31,23 +31,26 @@ public class SlowConveyorTile extends Tile {
     protected Polygon   arrow;
     
     
-    public SlowConveyorTile(double sXLoc, double sYLoc, double sXSize, double sYSize, Direction sDirection) {
-        super(sXLoc, sYLoc, sXSize, sYSize, sDirection);
+    public SlowConveyorTile(double xTopLeftLoc, double yTopLeftLoc, double xSize, double ySize, Direction direction) {
+        super(xTopLeftLoc, yTopLeftLoc, xSize, ySize, direction);
         draw();
     }
 
+    /**
+     * Graphically construct the object.
+     */
     @Override
     protected void draw() {
-        background = new Rectangle(xLoc, yLoc, xSize, ySize);
+        background = new Rectangle(getXTopLeftLoc(), getYTopLeftLoc(), getXSize(), getYSize());
         background.setFill(Color.GREEN);
         background.setStroke(Color.WHITE);
         this.getChildren().add(background);
         
         arrow = new Polygon();
         arrow.getPoints().setAll(
-                xLoc+(xSize/2), yLoc,
-                xLoc, yLoc+(ySize/2),
-                xLoc+xSize, yLoc+(ySize/2)
+                getXCenterLoc(), getYTopLeftLoc(),
+                getXTopLeftLoc(), getYCenterLoc(),
+                getXTopLeftLoc()+getXSize(), getYCenterLoc()
         );
         arrow.setFill(Color.LIGHTGREEN);
         arrow.setStroke(Color.WHITE);

@@ -22,35 +22,40 @@ import javafx.scene.Group;
  *
  * @author markknapp
  */
-abstract class Tile extends Group {
+abstract class Tile extends DimentionalGroup {
     
     protected   Direction   direction;
-    protected   double         xLoc, yLoc;
-    protected   double         xSize, ySize;
     
-    public Tile(double sXLoc, double sYLoc, double sXSize, double sYSize, Direction sDirection) {
+    public Tile(double xTopLeftLoc, double yTopLeftLoc, double xSize, double ySize, Direction sDirection) {
+        super(xSize, ySize);
         direction = sDirection;
-        xLoc = sXLoc;
-        yLoc = sYLoc;
-        xSize = sXSize;
-        ySize = sYSize;
+        setTopLeft(xTopLeftLoc, yTopLeftLoc);
     }
     
+    /**
+     * Graphically construct the object.
+     */
     abstract void draw();
     
+    /**
+     * Rotate 90 degrees clockwise.
+     */
     public void rotate90() {
-        direction = direction.rotate90();
-        this.setRotate(direction.getDegree());
+        direction = direction.rotate90(this);
     }
     
+    /**
+     * Rotate 180 degrees clockwise.
+     */
     public void rotate180() {
-        direction = direction.rotate180();
-        this.setRotate(direction.getDegree());
+        direction = direction.rotate180(this);
     }
-        
+    
+    /**
+     * Rotate 270 degrees clockwise (90 deg CCW).
+     */
     public void rotate270() {
-        direction = direction.rotate270();
-        this.setRotate(direction.getDegree());
+        direction = direction.rotate270(this);
     }
     
 }
