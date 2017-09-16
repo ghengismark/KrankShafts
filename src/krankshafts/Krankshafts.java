@@ -14,6 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package krankshafts;
 
 import javafx.application.Application;
@@ -63,6 +64,12 @@ public class Krankshafts extends Application {
         mainBoard.instructRobot(playerOne, Instruction.LEFT);
         mainBoard.instructRobot(playerOne, Instruction.FORWARD3);
         mainBoard.instructRobot(playerOne, Instruction.UTURN);
+        
+        InstructionCard ic = new InstructionCard(200,200,Instruction.FORWARD3);
+        root.getChildren().add(ic);
+        
+        InstructionCard ic2 = new InstructionCard(200,700,Instruction.BACK2);
+        root.getChildren().add(ic2);
         
 
         
