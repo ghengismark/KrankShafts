@@ -18,19 +18,21 @@
 package krankshafts;
 
 import javafx.scene.Group;
+import javafx.scene.layout.StackPane;
 
 /**
  *
  * @author markknapp
  */
-abstract class Tile extends DimentionalGroup {
+abstract class Tile extends StackPane {
     
     protected   Direction   direction;
+    protected   Dimention   dimention;
     
     public Tile(double xTopLeftLoc, double yTopLeftLoc, double xSize, double ySize, Direction sDirection) {
-        super(xSize, ySize);
         direction = sDirection;
-        setTopLeft(xTopLeftLoc, yTopLeftLoc);
+        dimention = new Dimention(xSize, ySize);
+        dimention.setTopLeft(xTopLeftLoc, yTopLeftLoc);
     }
     
     /**
@@ -57,6 +59,14 @@ abstract class Tile extends DimentionalGroup {
      */
     public void rotate270() {
         direction = direction.rotate270(this);
+    }
+    
+    /**
+     * Get the dimentions for this object
+     * @return the dimention
+     */
+    public Dimention getDimention() {
+        return dimention;
     }
     
 }

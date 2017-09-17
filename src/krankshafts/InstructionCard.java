@@ -17,10 +17,9 @@
 
 package krankshafts;
 
-import javafx.scene.Group;
 import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
@@ -29,17 +28,18 @@ import javafx.scene.text.TextAlignment;
  *
  * @author mark.knapp
  */
-public class InstructionCard extends DimentionalGroup {
+public class InstructionCard extends StackPane {
     
     private static final double CARD_X_SIZE = 100;
     private static final double CARD_Y_SIZE = 100;
     
     private Instruction instruction;
+    private Dimention dimention;
     
     public InstructionCard(double xCenterLoc, double yCenterLoc, Instruction instruction) {
-        super(CARD_X_SIZE, CARD_Y_SIZE);
         this.instruction = instruction;
-        setCenter(xCenterLoc, yCenterLoc);
+        dimention = new Dimention(CARD_X_SIZE, CARD_Y_SIZE);
+        dimention.setCenter(xCenterLoc, yCenterLoc);
         draw();
     }
     
@@ -48,7 +48,7 @@ public class InstructionCard extends DimentionalGroup {
      */
     protected void draw() {
         
-        Rectangle rect = new Rectangle(getXTopLeftLoc(), getYTopLeftLoc(), getXSize(), getYSize());
+        Rectangle rect = new Rectangle(dimention.getXTopLeftLoc(), dimention.getYTopLeftLoc(), dimention.getXSize(), dimention.getYSize());
         rect.setFill(Color.WHITE);
         rect.setStroke(Color.GREY);
         this.getChildren().add(rect);
@@ -65,8 +65,8 @@ public class InstructionCard extends DimentionalGroup {
         System.out.println(rect.getWidth());
         System.out.println(rect.getHeight());
         
-        text.setTranslateX(getXTopLeftLoc() + (rect.getWidth() - text.getWidth())/2);
-        text.setTranslateY(getYTopLeftLoc() + (rect.getHeight() - text.getHeight())/2);
+        text.setTranslateX(dimention.getXTopLeftLoc() + (rect.getWidth() - text.getWidth())/2);
+        text.setTranslateY(dimention.getYTopLeftLoc() + (rect.getHeight() - text.getHeight())/2);
                 
     }
     
@@ -76,9 +76,9 @@ public class InstructionCard extends DimentionalGroup {
      * @param   yCenterLoc    The Y coordinate of the desired location
      */  
     public void moveTo (double xCenterLoc, double yCenterLoc) { 
-        this.setTranslateX(xCenterLoc - getXCenterLoc() + this.getTranslateX());
-        this.setTranslateY(yCenterLoc - getYCenterLoc() + this.getTranslateY());
-        setCenter(xCenterLoc, yCenterLoc);
+        this.setTranslateX(xCenterLoc - dimention.getXCenterLoc() + this.getTranslateX());
+        this.setTranslateY(yCenterLoc - dimention.getYCenterLoc() + this.getTranslateY());
+        dimention.setCenter(xCenterLoc, yCenterLoc);
     }
 
     /**
@@ -88,4 +88,11 @@ public class InstructionCard extends DimentionalGroup {
         return instruction;
     }
 
+    /**
+     * Get the dimentions for this object
+     * @return the dimention
+     */
+    public Dimention getDimention() {
+        return dimention;
+    }
 }

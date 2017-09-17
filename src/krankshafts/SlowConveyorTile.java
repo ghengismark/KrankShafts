@@ -42,16 +42,16 @@ public class SlowConveyorTile extends Tile {
      */
     @Override
     protected void draw() {
-        background = new Rectangle(getXTopLeftLoc(), getYTopLeftLoc(), getXSize(), getYSize());
+        background = new Rectangle(dimention.getXTopLeftLoc(), dimention.getYTopLeftLoc(), dimention.getXSize(), dimention.getYSize());
         background.setFill(Color.GREEN);
         background.setStroke(Color.WHITE);
         this.getChildren().add(background);
         
         arrow = new Polygon();
         arrow.getPoints().setAll(
-                getXCenterLoc(), getYTopLeftLoc(),
-                getXTopLeftLoc(), getYCenterLoc(),
-                getXTopLeftLoc()+getXSize(), getYCenterLoc()
+                dimention.getXCenterLoc(), dimention.getYTopLeftLoc(),
+                dimention.getXTopLeftLoc(), dimention.getYCenterLoc(),
+                dimention.getXTopLeftLoc() + dimention.getXSize(), dimention.getYCenterLoc()
         );
         arrow.setFill(Color.LIGHTGREEN);
         arrow.setStroke(Color.WHITE);

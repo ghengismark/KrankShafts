@@ -20,6 +20,7 @@ package krankshafts;
 import java.util.ArrayList;
 import java.util.Random;
 import javafx.scene.Group;
+import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.paint.Color;
@@ -28,12 +29,13 @@ import javafx.scene.paint.Color;
  *
  * @author markknapp
  */
-public class Board extends DimentionalGroup {
+public class Board extends GridPane {
     
     protected   int         xSlots, ySlots;
     protected   double      xTileSize, yTileSize;
     protected   double      xRobotSize, yRobotSize;
     protected   Shape       background;
+    protected   Dimention   dimention;
     
     protected   Tile[][]    tileArr;
     protected   Group       tileGroup = new Group(); 
@@ -44,8 +46,8 @@ public class Board extends DimentionalGroup {
     protected       Random              diceRoller              = new Random();
             
     public Board (double xTopLeftLoc, double yTopLeftLoc, double xSize, double ySize, int xSlots, int ySlots) {
-        super(xSize, ySize);
-        setTopLeft(xTopLeftLoc, yTopLeftLoc);
+        dimention = new Dimention(xSize, ySize);
+        dimention.setTopLeft(xTopLeftLoc, yTopLeftLoc);
         this.xSlots = xSlots;
         this.ySlots = ySlots;
         xTileSize = xSize / xSlots;
@@ -61,7 +63,7 @@ public class Board extends DimentionalGroup {
      * Graphically construct the object.
      */
     protected void draw() {
-        background = new Rectangle(getXTopLeftLoc(), getYTopLeftLoc(), getXSize(), getYSize());
+        background = new Rectangle(dimention.getXTopLeftLoc(), dimention.getYTopLeftLoc(), dimention.getXSize(), dimention.getYSize());
         background.setFill(Color.GREY);
         background.setStroke(Color.WHITE);
         this.getChildren().add(background);
@@ -79,9 +81,9 @@ public class Board extends DimentionalGroup {
                 if (getTile(x,y) != null)
                     killTile(x,y);
                 if (diceRoller.nextBoolean())
-                    temp = new PlainTile(getXTopLeftLoc() + x * xTileSize, getYTopLeftLoc() + y * yTileSize, xTileSize, yTileSize, Direction.randomDirection());
+                    temp = new PlainTile(dimention.getXTopLeftLoc() + x * xTileSize, dimention.getYTopLeftLoc() + y * yTileSize, xTileSize, yTileSize, Direction.randomDirection());
                 else
-                    temp = new SlowConveyorTile(getXTopLeftLoc() + x * xTileSize, getYTopLeftLoc() + y * yTileSize, xTileSize, yTileSize, Direction.randomDirection());
+                    temp = new SlowConveyorTile(dimention.getXTopLeftLoc() + x * xTileSize, dimention.getYTopLeftLoc() + y * yTileSize, xTileSize, yTileSize, Direction.randomDirection());
                 setTile(temp, x, y);
             }
         
@@ -128,7 +130,7 @@ public class Board extends DimentionalGroup {
      * @return the robot
      */  
     public Robot addRobot (int xIndex, int yIndex, Direction direction) {
-        Robot temp = new Robot(tileArr[xIndex][yIndex].getXCenterLoc(), tileArr[xIndex][yIndex].getYCenterLoc(), xRobotSize, yRobotSize, xIndex, yIndex, direction);
+        Robot temp = new Robot(tileArr[xIndex][yIndex].getDimention().getXCenterLoc(), tileArr[xIndex][yIndex].getDimention().getYCenterLoc(), xRobotSize, yRobotSize, xIndex, yIndex, direction);
         robotGroup.getChildren().add(temp);
         robotArr.add(temp);
         return temp;
@@ -161,7 +163,7 @@ public class Board extends DimentionalGroup {
             // TODO - check for walls between current slot and potential slot
                     
             // Looks good. Go ahead and move.
-            robot.moveTo(tileArr[potentialXSlot][potentialYSlot].getXCenterLoc(), tileArr[potentialXSlot][potentialYSlot].getYCenterLoc(), potentialXSlot, potentialYSlot);
+            robot.moveTo(tileArr[potentialXSlot][potentialYSlot].getDimention().getXCenterLoc(), tileArr[potentialXSlot][potentialYSlot].getDimention().getYCenterLoc(), potentialXSlot, potentialYSlot);
         }
     }
     
@@ -199,5 +201,13 @@ public class Board extends DimentionalGroup {
         
         if (instruction.getRotate() != 0)
             rotateRobot(robot, instruction.getRotate());
-    }       
+    }    
+    
+    /**
+     * Get the dimentions for this object
+     * @return the dimention
+     */
+    public Dimention detDimention() {
+        return dimention;
+    }
 }

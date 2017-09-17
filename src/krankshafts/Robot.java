@@ -18,6 +18,7 @@
 package krankshafts;
 
 import javafx.scene.Group;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
@@ -26,18 +27,19 @@ import javafx.scene.shape.Rectangle;
  *
  * @author mark.knapp
  */
-public class Robot extends DimentionalGroup {
+public class Robot extends StackPane {
     
     protected Direction direction;
+    protected Dimention dimention;
     protected int xSlot;
     protected int ySlot;
     
     public Robot(double xCenterLoc, double yCenterLoc, double xSize, double ySize, int xSlot, int ySlot, Direction direction) {
-        super(xSize, ySize);
+        dimention = new Dimention(xSize, ySize);
         this.direction = direction;
         this.xSlot = xSlot;
         this.ySlot = ySlot;
-        setCenter(xCenterLoc, yCenterLoc);
+        dimention.setCenter(xCenterLoc, yCenterLoc);
         draw();
     }
     
@@ -48,10 +50,10 @@ public class Robot extends DimentionalGroup {
         
         Polygon poly = new Polygon();
         poly.getPoints().setAll(
-                getXTopLeftLoc()+(getXSize()/3), getYTopLeftLoc(),
-                getXTopLeftLoc()+(2*getXSize()/3), getYTopLeftLoc(),
-                getXTopLeftLoc()+getXSize(), getYTopLeftLoc()+(getYSize()),
-                getXTopLeftLoc(), getYTopLeftLoc()+(getYSize())
+                dimention.getXTopLeftLoc()+(dimention.getXSize()/3), dimention.getYTopLeftLoc(),
+                dimention.getXTopLeftLoc()+(2*dimention.getXSize()/3), dimention.getYTopLeftLoc(),
+                dimention.getXTopLeftLoc()+dimention.getXSize(), dimention.getYTopLeftLoc()+(dimention.getYSize()),
+                dimention.getXTopLeftLoc(), dimention.getYTopLeftLoc()+(dimention.getYSize())
         );
         poly.setFill(Color.RED);
         poly.setStroke(Color.WHITE);
@@ -90,9 +92,9 @@ public class Robot extends DimentionalGroup {
      * @param   ySlot    The Y slot of the desired location
      */  
     public void moveTo (double xCenterLoc, double yCenterLoc, int xSlot, int ySlot) { 
-        this.setTranslateX(xCenterLoc - getXCenterLoc() + this.getTranslateX());
-        this.setTranslateY(yCenterLoc - getYCenterLoc() + this.getTranslateY());
-        setCenter(xCenterLoc, yCenterLoc);
+        this.setTranslateX(xCenterLoc - dimention.getXCenterLoc() + this.getTranslateX());
+        this.setTranslateY(yCenterLoc - dimention.getYCenterLoc() + this.getTranslateY());
+        dimention.setCenter(xCenterLoc, yCenterLoc);
         this.xSlot = xSlot;
         this.ySlot = ySlot;
     }
@@ -116,5 +118,13 @@ public class Robot extends DimentionalGroup {
      */
     public int getYSlot() {
         return ySlot;
+    }
+    
+    /**
+     * Get the dimentions for this object
+     * @return the dimention
+     */
+    public Dimention getDimention() {
+        return dimention;
     }
 }

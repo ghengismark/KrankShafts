@@ -24,15 +24,15 @@ import javafx.scene.Node;
  *
  * @author mark.knapp
  */
-public class DimentionalGroup extends Group {
+public class Dimention {
     private   double         xCenterLoc, yCenterLoc;
     private   double         xTopLeftLoc, yTopLeftLoc;
     private   double         xSize, ySize;
 
-    public DimentionalGroup () {
+    public Dimention () {
     }
     
-    public DimentionalGroup (double xSize, double ySize) {
+    public Dimention (double xSize, double ySize) {
         this.xSize = xSize;
         this.ySize = ySize;
     }
@@ -72,13 +72,14 @@ public class DimentionalGroup extends Group {
     }
     
     /**
-     * Sets all coordinates based on the center, but then also moves the object.
+     * Sets all coordinates based on the center, but then also moves the node
      * @param xCenterLoc the x coordinate of the center
      * @param yCenterLoc the y coordinate of the center
+     * @param node the node to move
      */
-    public void setCenterAndMove(double xCenterLoc, double yCenterLoc) {
-        this.setTranslateX(xCenterLoc - getXCenterLoc() + this.getTranslateX());
-        this.setTranslateY(yCenterLoc - getYCenterLoc() + this.getTranslateY());
+    public void setCenterAndMove(double xCenterLoc, double yCenterLoc, Node node) {
+        node.setTranslateX(xCenterLoc - getXCenterLoc() + node.getTranslateX());
+        node.setTranslateY(yCenterLoc - getYCenterLoc() + node.getTranslateY());
         setCenter(xCenterLoc, yCenterLoc);
     }
 

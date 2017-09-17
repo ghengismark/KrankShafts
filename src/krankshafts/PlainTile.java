@@ -40,7 +40,7 @@ public class PlainTile extends Tile {
      */
     @Override
     protected void draw() {
-        background = new Rectangle(getXTopLeftLoc(), getYTopLeftLoc(), getXSize(), getYSize());
+        background = new Rectangle(dimention.getXTopLeftLoc(), dimention.getYTopLeftLoc(), dimention.getXSize(), dimention.getYSize());
         background.setFill(Color.BLUE);
         background.setStroke(Color.WHITE);
         this.getChildren().add(background);
