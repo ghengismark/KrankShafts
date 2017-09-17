@@ -42,22 +42,22 @@ public class SlowConveyorTile extends Tile {
      */
     @Override
     protected void draw() {
-        background = new Rectangle(0, 0, dimention.getXSize(), dimention.getYSize());
+        background = new Rectangle(0, 0, getDimention().getXSize(), getDimention().getYSize());
         background.setFill(Color.GREEN);
         background.setStroke(Color.WHITE);
         this.getChildren().add(background);
         
         arrow = new Polygon();
         arrow.getPoints().setAll(
-                dimention.getXSize()/2, 2.0,
-                2.0, dimention.getYSize()/2,
-                dimention.getXSize()-2.0, dimention.getYSize()/2
+                getDimention().getXSize()/2, 2.0,
+                2.0, getDimention().getYSize()/2,
+                getDimention().getXSize()-2.0, getDimention().getYSize()/2
         );
         arrow.setFill(Color.LIGHTGREEN);
         arrow.setStroke(Color.WHITE);
         this.getChildren().add(arrow);
         
-        this.setRotate(direction.getDegree());
+        this.setRotate(getDirection().getDegree());
         
     }
 

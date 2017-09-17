@@ -77,18 +77,16 @@ public class Board extends StackPane {
         tileGrid.setVgap(0.0);
         this.getChildren().add(tileGrid);
         StackPane.setAlignment(tileGrid, Pos.BOTTOM_CENTER);
-        Tile temp;
+        
+        Tile tile;
         for (int x = 0; x < tileArr.length; x++)
             for (int y = 0; y < tileArr[x].length; y++) {
-                if (getTile(x,y) != null)
-                    killTile(x,y);
                 if (diceRoller.nextBoolean())
-                    temp = new PlainTile(dimention.getXTopLeftLoc() + x * xTileSize, dimention.getYTopLeftLoc() + y * yTileSize, xTileSize, yTileSize, Direction.randomDirection());
+                    tile = new PlainTile(dimention.getXTopLeftLoc() + x * xTileSize, dimention.getYTopLeftLoc() + y * yTileSize, xTileSize, yTileSize, Direction.randomDirection());
                 else
-                    temp = new SlowConveyorTile(dimention.getXTopLeftLoc() + x * xTileSize, dimention.getYTopLeftLoc() + y * yTileSize, xTileSize, yTileSize, Direction.randomDirection());
-                setTile(temp, x, y);
+                    tile = new SlowConveyorTile(dimention.getXTopLeftLoc() + x * xTileSize, dimention.getYTopLeftLoc() + y * yTileSize, xTileSize, yTileSize, Direction.randomDirection());
+                setTile(tile, x, y);
             }
-        
     }
     
     /**
@@ -98,10 +96,13 @@ public class Board extends StackPane {
      * @param yIndex the y slot on the board to add it to
      */  
     public void setTile (Tile newTile, int xIndex, int yIndex) {
+        Robot robot = null;
         if (tileArr[xIndex][yIndex] != null)
-            killTile(xIndex, yIndex);
+            robot = tileArr[xIndex][yIndex].getRobot();
+        tileGrid.getChildren().remove(tileArr[xIndex][yIndex]);
         tileArr[xIndex][yIndex] = newTile;
         tileGrid.add(newTile, xIndex, yIndex);
+        newTile.setRobot(robot);
     }
     
     /**
@@ -115,16 +116,6 @@ public class Board extends StackPane {
     }
     
     /**
-     * Destroys the tile on a specific spot on the board
-     * @param xIndex the x slot on the board where the tile is
-     * @param yIndex the y slot on the board where the tile is
-     */  
-    public void killTile (int xIndex, int yIndex) {
-        tileGrid.getChildren().remove(tileArr[xIndex][yIndex]);
-        tileArr[xIndex][yIndex] = null;
-    }
-    
-    /**
      * Creates a new robot and places it on the board.
      * @param xIndex the x slot on the board to add it to
      * @param yIndex the y slot on the board to add it to
@@ -132,9 +123,10 @@ public class Board extends StackPane {
      * @return the robot
      */  
     public Robot addRobot (int xIndex, int yIndex, Direction direction) {
-        Robot temp = new Robot(tileArr[xIndex][yIndex].getDimention().getXCenterLoc(), tileArr[xIndex][yIndex].getDimention().getYCenterLoc(), xRobotSize, yRobotSize, xIndex, yIndex, direction);
-        robotArr.add(temp);
-        return temp;
+        Robot robot = new Robot(tileArr[xIndex][yIndex].getDimention().getXCenterLoc(), tileArr[xIndex][yIndex].getDimention().getYCenterLoc(), xRobotSize, yRobotSize, xIndex, yIndex, direction);
+        tileArr[xIndex][yIndex].setRobot(robot);
+        robotArr.add(robot);
+        return robot;
     }
     
     /**

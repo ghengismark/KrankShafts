@@ -26,8 +26,9 @@ import javafx.scene.layout.StackPane;
  */
 abstract class Tile extends StackPane {
     
-    protected   Direction   direction;
-    protected   Dimention   dimention;
+    private   Direction   direction;
+    private   Dimention   dimention;
+    private   Robot       robot;
     
     public Tile(double xTopLeftLoc, double yTopLeftLoc, double xSize, double ySize, Direction sDirection) {
         direction = sDirection;
@@ -67,6 +68,28 @@ abstract class Tile extends StackPane {
      */
     public Dimention getDimention() {
         return dimention;
+    }
+
+    /**
+     * Get the direction for this object
+     * @return the direction
+     */
+    public Direction getDirection() {
+        return direction;
+    }    
+    
+    /**
+     * @return the robot
+     */
+    public Robot getRobot() {
+        return robot;
+    }
+
+    /**
+     * @param robot the robot to set
+     */
+    public void setRobot(Robot robot) {
+        this.robot = robot;
     }
     
 }
