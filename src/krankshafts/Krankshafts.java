@@ -20,10 +20,17 @@ package krankshafts;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -44,20 +51,28 @@ public class Krankshafts extends Application {
     
     protected       Stage               mainStage;    
     protected       Scene               scene;    
-    protected       Group               root;
-    protected       Board       mainBoard;
+    protected       GridPane            rootGrid;
+    protected       Board               mainBoard;
+    protected       HBox                cards;
+    protected       VBox                handOfCards;
+    protected       VBox                registerOfCards;
     
     @Override
     public void start(Stage primaryStage) {
-        mainStage = primaryStage;
-        mainStage.setTitle("Asteroids FX");
+
         
-        root = new Group();
-        scene = new Scene(root, screenXSize, screenYSize, Color.BLACK);
-        mainStage.setScene(scene);
+        rootGrid = new GridPane();
+        rootGrid.setBackground(new Background((new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY))));
         
-        mainBoard = new Board(screenXSize-boardXSize-1, screenYSize-boardYSize-1, boardXSize, boardYSize, boardXSlots, boardYSlots);
-        root.getChildren().add(mainBoard);
+        mainBoard = new Board(boardXSize, boardYSize, boardXSlots, boardYSlots);
+        rootGrid.add(mainBoard, 1, 1);
+        
+        cards = new HBox(4);
+        rootGrid.add(cards, 0, 0, 1, 2);
+        
+        handOfCards = new VBox(2);
+        registerOfCards = new VBox(2);
+        cards.getChildren().addAll(handOfCards, registerOfCards);
         
         Robot playerOne = mainBoard.addRobot(0, 0, Direction.SOUTH);
         mainBoard.instructRobot(playerOne, Instruction.FORWARD3);
@@ -66,10 +81,10 @@ public class Krankshafts extends Application {
         mainBoard.instructRobot(playerOne, Instruction.UTURN);
         
         InstructionCard ic = new InstructionCard(200,200,Instruction.FORWARD3);
-        root.getChildren().add(ic);
+        handOfCards.getChildren().add(ic);
         
         InstructionCard ic2 = new InstructionCard(200,700,Instruction.BACK2);
-        root.getChildren().add(ic2);
+        handOfCards.getChildren().add(ic2);
         
 
         
@@ -77,6 +92,12 @@ public class Krankshafts extends Application {
 //        backgroundMusic.play();
         
     //    statusUpdate();
+        
+    
+        mainStage = primaryStage;
+        mainStage.setTitle("Krank Shafts");
+        scene = new Scene(rootGrid, screenXSize, screenYSize, Color.BLACK);
+        mainStage.setScene(scene);
         
         mainStage.show();
         

@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import javafx.scene.Group;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.TilePane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.paint.Color;
@@ -29,25 +30,21 @@ import javafx.scene.paint.Color;
  *
  * @author markknapp
  */
-public class Board extends GridPane {
+public class Board extends Group {
     
     protected   int         xSlots, ySlots;
     protected   double      xTileSize, yTileSize;
     protected   double      xRobotSize, yRobotSize;
     protected   Shape       background;
     protected   Dimention   dimention;
-    
+    protected   GridPane    tileGrid;
     protected   Tile[][]    tileArr;
-    protected   Group       tileGroup = new Group(); 
-    
     protected   ArrayList<Robot>    robotArr = new ArrayList<>();
-    protected   Group       robotGroup = new Group(); 
-    
     protected       Random              diceRoller              = new Random();
             
-    public Board (double xTopLeftLoc, double yTopLeftLoc, double xSize, double ySize, int xSlots, int ySlots) {
+    public Board (double xSize, double ySize, int xSlots, int ySlots) {
         dimention = new Dimention(xSize, ySize);
-        dimention.setTopLeft(xTopLeftLoc, yTopLeftLoc);
+        dimention.setTopLeft(0, 0);
         this.xSlots = xSlots;
         this.ySlots = ySlots;
         xTileSize = xSize / xSlots;
@@ -67,17 +64,17 @@ public class Board extends GridPane {
         background.setFill(Color.GREY);
         background.setStroke(Color.WHITE);
         this.getChildren().add(background);
-        this.getChildren().add(tileGroup);
-        this.getChildren().add(robotGroup);
     }
     
     /**
      * Fill the board with random tiles
      */
     public void populate() {
+        this.getChildren().add(tileGrid);
         Tile temp;
         for (int x = 0; x < tileArr.length; x++)
             for (int y = 0; y < tileArr[x].length; y++) {
+                System.out.println(dimention.getXTopLeftLoc() + x * xTileSize);
                 if (getTile(x,y) != null)
                     killTile(x,y);
                 if (diceRoller.nextBoolean())
@@ -99,7 +96,7 @@ public class Board extends GridPane {
         if (tileArr[xIndex][yIndex] != null)
             killTile(xIndex, yIndex);
         tileArr[xIndex][yIndex] = newTile;
-        tileGroup.getChildren().add(newTile);
+        tileGrid.add(newTile, xIndex, yIndex);
     }
     
     /**
@@ -118,7 +115,7 @@ public class Board extends GridPane {
      * @param yIndex the y slot on the board where the tile is
      */  
     public void killTile (int xIndex, int yIndex) {
-        tileGroup.getChildren().remove(tileArr[xIndex][yIndex]);
+        tileGrid.getChildren().remove(tileArr[xIndex][yIndex]);
         tileArr[xIndex][yIndex] = null;
     }
     

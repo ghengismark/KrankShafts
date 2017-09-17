@@ -17,6 +17,7 @@
 
 package krankshafts;
 
+import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -28,7 +29,7 @@ import javafx.scene.text.TextAlignment;
  *
  * @author mark.knapp
  */
-public class InstructionCard extends StackPane {
+public class InstructionCard extends Group {
     
     private static final double CARD_X_SIZE = 100;
     private static final double CARD_Y_SIZE = 100;
@@ -48,7 +49,7 @@ public class InstructionCard extends StackPane {
      */
     protected void draw() {
         
-        Rectangle rect = new Rectangle(dimention.getXTopLeftLoc(), dimention.getYTopLeftLoc(), dimention.getXSize(), dimention.getYSize());
+        Rectangle rect = new Rectangle(0, 0, dimention.getXSize(), dimention.getYSize());
         rect.setFill(Color.WHITE);
         rect.setStroke(Color.GREY);
         this.getChildren().add(rect);
@@ -59,14 +60,9 @@ public class InstructionCard extends StackPane {
         text.setTextFill(Color.RED);
         text.setTextAlignment(TextAlignment.CENTER);
         this.getChildren().add(text);
-        
-        System.out.println(text.getWidth());
-        System.out.println(text.getHeight());
-        System.out.println(rect.getWidth());
-        System.out.println(rect.getHeight());
-        
-        text.setTranslateX(dimention.getXTopLeftLoc() + (rect.getWidth() - text.getWidth())/2);
-        text.setTranslateY(dimention.getYTopLeftLoc() + (rect.getHeight() - text.getHeight())/2);
+//        
+//        text.setTranslateX(dimention.getXTopLeftLoc() + (rect.getWidth() - text.getWidth())/2);
+//        text.setTranslateY(dimention.getYTopLeftLoc() + (rect.getHeight() - text.getHeight())/2);
                 
     }
     
