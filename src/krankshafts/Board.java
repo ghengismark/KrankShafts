@@ -19,6 +19,7 @@ package krankshafts;
 
 import java.util.ArrayList;
 import java.util.Random;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -33,15 +34,15 @@ import javafx.scene.paint.Color;
  */
 public class Board extends StackPane {
     
-    protected   int         xSlots, ySlots;
-    protected   double      xTileSize, yTileSize;
-    protected   double      xRobotSize, yRobotSize;
-    protected   Shape       background;
-    protected   Dimention   dimention;
-    protected   GridPane    tileGrid;
-    protected   Tile[][]    tileArr;
-    protected   ArrayList<Robot>    robotArr = new ArrayList<>();
-    protected       Random              diceRoller              = new Random();
+    protected int         xSlots, ySlots;
+    protected double      xTileSize, yTileSize;
+    protected double      xRobotSize, yRobotSize;
+    protected Shape       background;
+    protected Dimention   dimention;
+    protected GridPane    tileGrid;
+    protected Tile[][]    tileArr;
+    protected ArrayList<Robot>    robotArr = new ArrayList<>();
+    protected Random diceRoller = new Random();
             
     public Board (double xSize, double ySize, int xSlots, int ySlots) {
         dimention = new Dimention(xSize, ySize);
@@ -53,7 +54,7 @@ public class Board extends StackPane {
         xRobotSize = xTileSize*0.8;
         yRobotSize = yTileSize*0.8;
         tileArr = new Tile[xSlots][ySlots];
-        draw();
+        //draw();
         populate();
     }
     
@@ -61,7 +62,7 @@ public class Board extends StackPane {
      * Graphically construct the object.
      */
     protected void draw() {
-        background = new Rectangle(dimention.getXTopLeftLoc(), dimention.getYTopLeftLoc(), dimention.getXSize(), dimention.getYSize());
+        background = new Rectangle(0, 0, dimention.getXSize(), dimention.getYSize());
         background.setFill(Color.GREY);
         background.setStroke(Color.WHITE);
         this.getChildren().add(background);
@@ -71,7 +72,11 @@ public class Board extends StackPane {
      * Fill the board with random tiles
      */
     public void populate() {
+        tileGrid = new GridPane();
+        tileGrid.setHgap(0.0);
+        tileGrid.setVgap(0.0);
         this.getChildren().add(tileGrid);
+        StackPane.setAlignment(tileGrid, Pos.BOTTOM_CENTER);
         Tile temp;
         for (int x = 0; x < tileArr.length; x++)
             for (int y = 0; y < tileArr[x].length; y++) {

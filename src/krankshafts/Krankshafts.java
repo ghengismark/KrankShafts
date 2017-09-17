@@ -20,7 +20,10 @@ package krankshafts;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -29,6 +32,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
@@ -42,20 +46,24 @@ import javafx.stage.Stage;
 public class Krankshafts extends Application {
     
     // Some initial dimentions
-    public double   screenXSize        = 1000;
-    public double   screenYSize        = 800;  
-    public double   boardXSize         = 600;
-    public double   boardYSize         = 600;  
-    public int      boardXSlots        = 12;
-    public int      boardYSlots        = 12;  
+    private double   screenXSize        = 1000;
+    private double   screenYSize        = 800;  
+    private double   boardXSize         = 600;
+    private double   boardYSize         = 600;  
+    private int      boardXSlots        = 12;
+    private int      boardYSlots        = 12;
+    private int      cardMargins        = 20;
     
-    protected       Stage               mainStage;    
-    protected       Scene               scene;    
-    protected       GridPane            rootGrid;
-    protected       Board               mainBoard;
-    protected       HBox                cards;
-    protected       VBox                handOfCards;
-    protected       VBox                registerOfCards;
+    
+    
+    private       Stage               mainStage;    
+    private       Scene               scene;    
+    private       GridPane            rootGrid;
+    private       Board               mainBoard;
+    private       HBox                topBanner;
+    private       HBox                cards;
+    private       VBox                handOfCards;
+    private       VBox                registerOfCards;
     
     @Override
     public void start(Stage primaryStage) {
@@ -66,13 +74,24 @@ public class Krankshafts extends Application {
         
         mainBoard = new Board(boardXSize, boardYSize, boardXSlots, boardYSlots);
         rootGrid.add(mainBoard, 1, 1);
+        GridPane.setHalignment(mainBoard, HPos.RIGHT);
+        GridPane.setValignment(mainBoard, VPos.BOTTOM);
         
-        cards = new HBox(4);
+        topBanner = new HBox();
+        rootGrid.add(topBanner, 1, 0);
+        rootGrid.setVgrow(topBanner, Priority.ALWAYS);
+        
+        cards = new HBox();
         rootGrid.add(cards, 0, 0, 1, 2);
+        rootGrid.setHgrow(cards, Priority.ALWAYS);
+        cards.setSpacing(cardMargins);
+        rootGrid.setMargin(cards, new Insets(cardMargins, cardMargins, cardMargins, cardMargins));
         
-        handOfCards = new VBox(2);
-        registerOfCards = new VBox(2);
+        handOfCards = new VBox();
+        registerOfCards = new VBox();
         cards.getChildren().addAll(handOfCards, registerOfCards);
+        handOfCards.setSpacing(cardMargins);
+        registerOfCards.setSpacing(cardMargins);        
         
         Robot playerOne = mainBoard.addRobot(0, 0, Direction.SOUTH);
         mainBoard.instructRobot(playerOne, Instruction.FORWARD3);
@@ -82,10 +101,13 @@ public class Krankshafts extends Application {
         
         InstructionCard ic = new InstructionCard(200,200,Instruction.FORWARD3);
         handOfCards.getChildren().add(ic);
-        
         InstructionCard ic2 = new InstructionCard(200,700,Instruction.BACK2);
         handOfCards.getChildren().add(ic2);
         
+        InstructionCard ic3 = new InstructionCard(200,200,Instruction.FORWARD1);
+        registerOfCards.getChildren().add(ic3);
+        InstructionCard ic4 = new InstructionCard(200,700,Instruction.BACK1);
+        registerOfCards.getChildren().add(ic4);
 
         
 //        backgroundMusic = new AudioClip(getClass().getClassLoader().getResource(BACKGROUND_MUSIC_FILE).toString());
