@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import javafx.scene.Group;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -30,7 +31,7 @@ import javafx.scene.paint.Color;
  *
  * @author markknapp
  */
-public class Board extends Group {
+public class Board extends StackPane {
     
     protected   int         xSlots, ySlots;
     protected   double      xTileSize, yTileSize;
@@ -74,7 +75,6 @@ public class Board extends Group {
         Tile temp;
         for (int x = 0; x < tileArr.length; x++)
             for (int y = 0; y < tileArr[x].length; y++) {
-                System.out.println(dimention.getXTopLeftLoc() + x * xTileSize);
                 if (getTile(x,y) != null)
                     killTile(x,y);
                 if (diceRoller.nextBoolean())
@@ -128,7 +128,6 @@ public class Board extends Group {
      */  
     public Robot addRobot (int xIndex, int yIndex, Direction direction) {
         Robot temp = new Robot(tileArr[xIndex][yIndex].getDimention().getXCenterLoc(), tileArr[xIndex][yIndex].getDimention().getYCenterLoc(), xRobotSize, yRobotSize, xIndex, yIndex, direction);
-        robotGroup.getChildren().add(temp);
         robotArr.add(temp);
         return temp;
     }
