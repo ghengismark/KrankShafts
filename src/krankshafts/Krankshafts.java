@@ -94,10 +94,10 @@ public class Krankshafts extends Application {
         registerOfCards.setSpacing(cardMargins);        
         
         Robot playerOne = mainBoard.addRobot(0, 0, Direction.SOUTH);
-        mainBoard.instructRobot(playerOne, Instruction.FORWARD3);
-        mainBoard.instructRobot(playerOne, Instruction.LEFT);
-        mainBoard.instructRobot(playerOne, Instruction.FORWARD3);
-        mainBoard.instructRobot(playerOne, Instruction.UTURN);
+//        mainBoard.instructRobot(playerOne, Instruction.FORWARD3);
+//        mainBoard.instructRobot(playerOne, Instruction.LEFT);
+//        mainBoard.instructRobot(playerOne, Instruction.FORWARD3);
+//        mainBoard.instructRobot(playerOne, Instruction.UTURN);
         
         InstructionCard ic = new InstructionCard(200,200,Instruction.FORWARD3);
         handOfCards.getChildren().add(ic);

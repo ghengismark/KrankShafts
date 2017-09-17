@@ -88,8 +88,21 @@ abstract class Tile extends StackPane {
     /**
      * @param robot the robot to set
      */
-    public void setRobot(Robot robot) {
-        this.robot = robot;
+    public void addRobot(Robot robot) {
+        if (robot != null) {
+            this.robot = robot;
+            this.getChildren().add(robot);
+        }
+    }
+    
+    /**
+     * Remove whatever robot is currently attached
+     */
+    public void removeRobot() {
+        if (robot != null) {
+            this.getChildren().remove(robot);
+            robot = null;
+        }
     }
     
 }

@@ -102,7 +102,7 @@ public class Board extends StackPane {
         tileGrid.getChildren().remove(tileArr[xIndex][yIndex]);
         tileArr[xIndex][yIndex] = newTile;
         tileGrid.add(newTile, xIndex, yIndex);
-        newTile.setRobot(robot);
+        newTile.addRobot(robot);
     }
     
     /**
@@ -124,7 +124,7 @@ public class Board extends StackPane {
      */  
     public Robot addRobot (int xIndex, int yIndex, Direction direction) {
         Robot robot = new Robot(tileArr[xIndex][yIndex].getDimention().getXCenterLoc(), tileArr[xIndex][yIndex].getDimention().getYCenterLoc(), xRobotSize, yRobotSize, xIndex, yIndex, direction);
-        tileArr[xIndex][yIndex].setRobot(robot);
+        tileArr[xIndex][yIndex].addRobot(robot);
         robotArr.add(robot);
         return robot;
     }
