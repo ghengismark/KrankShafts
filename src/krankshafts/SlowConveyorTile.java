@@ -32,8 +32,8 @@ public class SlowConveyorTile extends Tile {
     protected Polygon   arrow;
     
     
-    public SlowConveyorTile(double xTopLeftLoc, double yTopLeftLoc, double xSize, double ySize, Direction direction) {
-        super(xTopLeftLoc, yTopLeftLoc, xSize, ySize, direction);
+    public SlowConveyorTile(double xTopLeftLoc, double yTopLeftLoc, double xSize, double ySize, int xSlot, int ySlot, Direction direction) {
+        super(xTopLeftLoc, yTopLeftLoc, xSize, ySize, xSlot, ySlot, direction);
         draw();
     }
 

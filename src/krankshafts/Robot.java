@@ -91,12 +91,12 @@ public class Robot extends StackPane {
      * @param   xSlot    The X slot of the desired location
      * @param   ySlot    The Y slot of the desired location
      */  
-    public void moveTo (double xCenterLoc, double yCenterLoc, int xSlot, int ySlot) { 
-        this.setTranslateX(xCenterLoc - dimention.getXCenterLoc() + this.getTranslateX());
-        this.setTranslateY(yCenterLoc - dimention.getYCenterLoc() + this.getTranslateY());
-        dimention.setCenter(xCenterLoc, yCenterLoc);
-        this.xSlot = xSlot;
-        this.ySlot = ySlot;
+    public void moveTo (Tile tile) { 
+        this.setTranslateX(tile.getDimention().getXCenterLoc() - getDimention().getXCenterLoc() + this.getTranslateX());
+        this.setTranslateY(tile.getDimention().getYCenterLoc() - getDimention().getYCenterLoc() + this.getTranslateY());
+        getDimention().setCenter(tile.getDimention().getXCenterLoc(), tile.getDimention().getYCenterLoc());
+        this.xSlot = tile.getxSlot();
+        this.ySlot = tile.getySlot();
     }
 
     /**

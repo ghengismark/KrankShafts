@@ -82,9 +82,9 @@ public class Board extends StackPane {
         for (int x = 0; x < tileArr.length; x++)
             for (int y = 0; y < tileArr[x].length; y++) {
                 if (diceRoller.nextBoolean())
-                    tile = new PlainTile(dimention.getXTopLeftLoc() + x * xTileSize, dimention.getYTopLeftLoc() + y * yTileSize, xTileSize, yTileSize, Direction.randomDirection());
+                    tile = new PlainTile(dimention.getXTopLeftLoc() + x * xTileSize, dimention.getYTopLeftLoc() + y * yTileSize, xTileSize, yTileSize, x, y, Direction.randomDirection());
                 else
-                    tile = new SlowConveyorTile(dimention.getXTopLeftLoc() + x * xTileSize, dimention.getYTopLeftLoc() + y * yTileSize, xTileSize, yTileSize, Direction.randomDirection());
+                    tile = new SlowConveyorTile(dimention.getXTopLeftLoc() + x * xTileSize, dimention.getYTopLeftLoc() + y * yTileSize, xTileSize, yTileSize, x, y, Direction.randomDirection());
                 setTile(tile, x, y);
             }
     }
@@ -156,7 +156,10 @@ public class Board extends StackPane {
             // TODO - check for walls between current slot and potential slot
                     
             // Looks good. Go ahead and move.
-            robot.moveTo(tileArr[potentialXSlot][potentialYSlot].getDimention().getXCenterLoc(), tileArr[potentialXSlot][potentialYSlot].getDimention().getYCenterLoc(), potentialXSlot, potentialYSlot);
+            tileArr[robot.getXSlot()][robot.getYSlot()].setRobot(null);
+            tileArr[potentialXSlot][potentialYSlot].setRobot(robot);
+            robot.moveTo(tileArr[potentialXSlot][potentialYSlot]);
+            
         }
     }
     
@@ -200,7 +203,7 @@ public class Board extends StackPane {
      * Get the dimentions for this object
      * @return the dimention
      */
-    public Dimention detDimention() {
+    public Dimention getDimention() {
         return dimention;
     }
 }

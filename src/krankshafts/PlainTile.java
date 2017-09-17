@@ -30,8 +30,8 @@ public class PlainTile extends Tile {
     protected Shape background;
     
     
-    public PlainTile(double xTopLeftLoc, double yTopLeftLoc, double xSize, double ySize, Direction direction) {
-        super(xTopLeftLoc, yTopLeftLoc, xSize, ySize, direction);
+    public PlainTile(double xTopLeftLoc, double yTopLeftLoc, double xSize, double ySize, int xSlot, int ySlot, Direction direction) {
+        super(xTopLeftLoc, yTopLeftLoc, xSize, ySize, xSlot, ySlot, direction);
         draw();
     }
 

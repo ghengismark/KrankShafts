@@ -29,11 +29,14 @@ abstract class Tile extends StackPane {
     private   Direction   direction;
     private   Dimention   dimention;
     private   Robot       robot;
+    private   int         xSlot, ySlot;
     
-    public Tile(double xTopLeftLoc, double yTopLeftLoc, double xSize, double ySize, Direction sDirection) {
+    public Tile(double xTopLeftLoc, double yTopLeftLoc, double xSize, double ySize, int xSlot, int ySlot, Direction sDirection) {
         direction = sDirection;
         dimention = new Dimention(xSize, ySize);
         dimention.setTopLeft(xTopLeftLoc, yTopLeftLoc);
+        this.xSlot = xSlot;
+        this.ySlot = ySlot;
     }
     
     /**
@@ -89,7 +92,39 @@ abstract class Tile extends StackPane {
      * @param robot the robot to set
      */
     public void setRobot(Robot robot) {
+        if (this.robot != null)
+            this.getChildren().remove(this.robot);
         this.robot = robot;
+        if (this.robot != null)
+            this.getChildren().add(robot);
+    }
+
+    /**
+     * @return the xSlot
+     */
+    public int getxSlot() {
+        return xSlot;
+    }
+
+    /**
+     * @param xSlot the xSlot to set
+     */
+    public void setxSlot(int xSlot) {
+        this.xSlot = xSlot;
+    }
+
+    /**
+     * @return the ySlot
+     */
+    public int getySlot() {
+        return ySlot;
+    }
+
+    /**
+     * @param ySlot the ySlot to set
+     */
+    public void setySlot(int ySlot) {
+        this.ySlot = ySlot;
     }
     
 }
