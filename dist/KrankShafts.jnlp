@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="KrankShafts.jnlp">
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="Krankshafts.jnlp">
   <information>
-    <title>KrankShafts</title>
-    <vendor>mark.knapp</vendor>
+    <title>Krankshafts</title>
+    <vendor>markknapp</vendor>
     <description>null</description>
     <offline-allowed/>
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+<<<<<<< HEAD
     <jar href="KrankShafts.jar" size="16881" download="eager" />
+=======
+    <jar href="Krankshafts.jar" size="15544" download="eager" />
+>>>>>>> c48014537eb9a14147768b0a9cb0914b5099fd6d
   </resources>
-  <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="KrankShafts" >
+  <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="Krankshafts" >
     <param name="requiredFXVersion" value="8.0+"/>
   </applet-desc>
-  <jfx:javafx-desc  width="800" height="600" main-class="krankshafts.Krankshafts"  name="KrankShafts" />
+  <jfx:javafx-desc  width="800" height="600" main-class="krankshafts.Krankshafts"  name="Krankshafts" />
   <update check="always"/>
 </jnlp>
